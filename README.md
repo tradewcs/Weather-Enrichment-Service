@@ -34,7 +34,7 @@ Browser (Angular)
        ▼
   FastAPI App
        │             ┌──────────┐
-       ├────────────▶│  Redis   │◀──── Celery Worker
+       ├───────────▶│  Redis   │◀──── Celery Worker
        │             └──────────┘           │
        ▼                                    ▼
   PostgreSQL ◀──────────────────── (оновлення погоди)
