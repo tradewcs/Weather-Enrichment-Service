@@ -1,0 +1,51 @@
+<div class="container">
+  <header>
+    <h1>Weather</h1>
+    <p class="subtitle">Track live weather across your cities</p>
+  </header>
+
+  <app-add-city (cityAdded)="loadCities()" />
+
+  <div class="state" *ngIf="loading">
+    <span class="spinner"></span>
+    <span>Loading...</span>
+  </div>
+
+  <div class="state error-state" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="state" *ngIf="!loading && !error && cities.length === 0">
+    No cities yet. Add one above.
+  </div>
+
+  <div class="grid" *ngIf="!loading && cities.length > 0">
+    <div class="card" *ngFor="let city of cities">
+      <div class="card-header">
+        <h2>{{ city.name }}</h2>
+        <button
+          class="refresh-btn"
+          (click)="refresh(city.id)"
+          [disabled]="isRefreshing(city.id)"
+        >
+          {{ isRefreshing(city.id) ? 'Updating...' : 'Refresh' }}
+        </button>
+      </div>
+
+      <div class="weather" *ngIf="city.weather; else noWeather">
+        <div class="temp">{{ city.weather.temperature | number:'1.0-1' }}°C</div>
+        <div class="description">{{ city.weather.description }}</div>
+        <div class="meta">
+          <span>Feels like {{ city.weather.feels_like | number:'1.0-1' }}°C</span>
+          <span>💧 {{ city.weather.humidity }}%</span>
+          <span>💨 {{ city.weather.wind_speed }} m/s</span>
+        </div>
+        <div class="updated">Updated {{ formatDate(city.weather.fetched_at) }}</div>
+      </div>
+
+      <ng-template #noWeather>
+        <div class="no-weather">Weather data pending...</div>
+      </ng-template>
+    </div>
+  </div>
+</div>

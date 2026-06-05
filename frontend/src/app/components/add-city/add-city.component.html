@@ -1,0 +1,12 @@
+<div class="add-city">
+  <input
+    [(ngModel)]="name"
+    placeholder="Enter city name"
+    [disabled]="loading"
+    (keydown.enter)="submit()"
+  />
+  <button (click)="submit()" [disabled]="!name.trim() || loading">
+    {{ loading ? 'Adding...' : 'Add city' }}
+  </button>
+  <span class="error" *ngIf="error">{{ error }}</span>
+</div>
